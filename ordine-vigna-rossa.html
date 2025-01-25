@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordine Vigna Rossa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .order-section {
+            margin-top: 30px;
+        }
+        .order-section select,
+        .order-section input {
+            width: 200px;
+            padding: 10px;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        .total {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: #555;
+        }
+        .cta {
+            margin-top: 20px;
+        }
+        .cta button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        .cta button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ordina Profumo Ambiente Vigna Rossa</h1>
+    <div class="order-section">
+        <p>Scegli il formato:</p>
+        <select id="format" onchange="updateTotal()">
+            <option value="20">200ml - 20.00€</option>
+            <option value="35">500ml - 35.00€</option>
+        </select>
+        <p>Inserisci quantità:</p>
+        <input type="number" id="quantity" value="1" min="1" onchange="updateTotal()">
+        <p class="total" id="total">Totale: 20.00€</p>
+    </div>
+    <div class="cta">
+        <button onclick="sendOrder()">Invia Conferma Ordine</button>
+    </div>
+    <script>
+        function updateTotal() {
+            const formatPrice = document.getElementById("format").value;
+            const quantity = document.getElementById("quantity").value;
+            const total = (formatPrice * quantity).toFixed(2);
+            document.getElementById("total").textContent = `Totale: ${total}€`;
+        }
+
+        function sendOrder() {
+            const format = document.getElementById("format");
+            const formatText = format.options[format.selectedIndex].text;
+            const quantity = document.getElementById("quantity").value;
+            const total = (format.value * quantity).toFixed(2);
+            const message = `Ciao! Vorrei ordinare:\n- ${formatText}\n- Quantità: ${quantity}\n- Totale: ${total}€`;
+            const whatsappURL = `https://wa.me/393717771328?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, "_blank");
+        }
+    </script>
+</body>
+</html>
